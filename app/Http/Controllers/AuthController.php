@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use \App\User;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -11,19 +13,20 @@ class AuthController extends Controller
     {
         $http = new \GuzzleHttp\Client;
         try {
-            $response = $http->post(config('services.passport.login_endpoint'), [
+            $response = $http->post(route('passport.token'), [
                 'form_params' => [
                     'grant_type' => 'password',
                     'client_id' => config('services.passport.client_id'),
                     'client_secret' => config('services.passport.client_secret'),
-                    'username' => $request->username,
+                    'username' => $request->email,
                     'password' => $request->password,
                 ]
             ]);
             return $response->getBody();
         } catch (\GuzzleHttp\Exception\BadResponseException $e) {
+            dd($e);
             if ($e->getCode() === 400) {
-                return response()->json('Invalid Request. Please enter a username or a password.', $e->getCode());
+                return response()->json('Invalid Request. Please enter a email or a password.', $e->getCode());
             } else if ($e->getCode() === 401) {
                 return response()->json('Your credentials are incorrect. Please try again', $e->getCode());
             }

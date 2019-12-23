@@ -19,7 +19,8 @@ Route::get('/', function() {
     return '';
 });
 Route::prefix('/auth/')->group(function () {
-    
+    Route::get('{provider}/redirect', 'Auth\SocialiteController@redirectToProvider');
+    Route::get('{provider}/callback', 'Auth\SocialiteController@handleProviderCallback');
     Route::middleware('auth:api')->group(function () { 
         Route::get('/user', function (Request $request) {
             return ["user" => $request->user()];

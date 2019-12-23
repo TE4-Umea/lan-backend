@@ -15,9 +15,7 @@ header('Access-Control-Allow-Headers:  Content-Type, X-Auth-Token, Origin, Autho
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::get('/', function() {
-    return '';
-});
+Route::get('/', 'IndexController');
 Route::prefix('/auth/')->group(function () {
     
     Route::get('{provider}/redirect', 'Auth\SocialiteController@redirectToProvider');
@@ -25,9 +23,7 @@ Route::prefix('/auth/')->group(function () {
 
     Route::middleware('multi-auth')->group(function () {
         
-        Route::get('user', function (Request $request) {
-            return ["user" => $request->user()];
-        });
+        Route::get('user', 'Auth\UserController');
         Route::post('/logout', 'Auth\PassportAuthController@logout')->name('auth.logout');
     });
 

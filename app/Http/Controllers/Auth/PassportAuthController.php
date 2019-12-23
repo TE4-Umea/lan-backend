@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Auth;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use \App\User;
 use Illuminate\Support\Facades\Hash;
 
-class AuthController extends Controller
+class PassportAuthController extends Controller
 {
 
     public function login(Request $request)

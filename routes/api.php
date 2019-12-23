@@ -24,9 +24,9 @@ Route::prefix('/auth/')->group(function () {
         Route::get('/user', function (Request $request) {
             return ["user" => $request->user()];
         });
-        Route::post('/logout', 'AuthController@logout')->name('auth.logout');
+        Route::post('/logout', 'Auth\PassportAuthController@logout')->name('auth.logout');
     });
 
-    Route::post('login', 'AuthController@login')->name('auth.login');
-    Route::post('register', 'AuthController@register')->name('auth.register');
+    Route::post('login', 'Auth\PassportAuthController@login')->name('auth.login');
+    Route::post('register', 'Auth\PassportAuthController@register')->name('auth.register');
 });

@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Socialite;
+use App\User;
 
 class SocialiteAuthenticate
 {
@@ -16,14 +17,26 @@ class SocialiteAuthenticate
      */
     public function handle($request, Closure $next)
     {
-        if($request->filled('accessType')) {
-            $social_user = Socialite::driver($request->accessType)->stateless()->userFromToken($request->token);
-            $user = User::firstOrFail()->where('email', $social_user->email);
+        if($request->filled('provider')) {
+            try {
+
+                $social_user = Socialite::driver($request->provider)->
+                    stateless()->
+                    userFromToken($request->bearerToken());
+            } catch (\Exception $e) {
+                return abort(401, "Invalid Credentials");
+            }
+            // dd($social_user);
+            $user = User::where('email', $social_user['email'])->first();
+            $request->setUserResolver(function () use ($user) {
+                return $user;
+            });
+            // dd($user);
             if ($user) {
                 $request->merge(['user' => $user ]);
                 return $next($request);
             }
         }
-        return abort(401, "The Supplied token is invalid!");
+        return abort(401, "Invalid Credentials");
     }
 }

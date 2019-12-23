@@ -23,7 +23,7 @@ Route::prefix('/auth/')->group(function () {
     Route::get('{provider}/redirect', 'Auth\SocialiteController@redirectToProvider');
     Route::get('{provider}/callback', 'Auth\SocialiteController@handleProviderCallback');
 
-    Route::middleware('multi-auth')->group(function () { 
+    Route::middleware('multi-auth')->group(function () {
         Route::get('/user', function (Request $request) {
             return ["user" => $request->user()];
         });

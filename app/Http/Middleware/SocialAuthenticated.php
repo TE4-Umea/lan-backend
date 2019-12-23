@@ -4,8 +4,10 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use \Laravel\Passport\Http\Middleware\CheckClientCredentials;
+// use Laravel\Passport\Http\Middleware\CheckClientCredentials;
+// use \Laravel\Passport\Http\Middleware\CheckClientCredentialsForAnyScope;
 use \App\Http\Middleware\SocialiteAuthenticate;
+use Illuminate\Auth\Middleware\Authenticate;
 
 class SocialAuthenticated
 {
@@ -19,15 +21,14 @@ class SocialAuthenticated
     public function handle($request, Closure $next)
     {
         // if should be authenticated with passport
-        if(!$request->filled('accessType')) {
-            return app(CheckClientCredentials::class)->handle($request, function ($request) use ($next) {
+        if(!$request->filled('provider')) {            
+            return app(Authenticate::class)->handle($request, function ($request) use ($next) {
                 return $next($request);
-            });
+            }, "api");
         }
         // authenticate with socialite
         return app(SocialiteAuthenticate::class)->handle($request, function ($request) use ($next) {
             return $next($request);
-        });
-        
+        });  
     }
 }

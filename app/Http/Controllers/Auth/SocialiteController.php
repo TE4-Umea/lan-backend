@@ -35,7 +35,7 @@ class SocialiteController extends Controller
         return [
             "token" => $social_user->token,
             "refreshToken" => $social_user->refreshToken,
-            "accessType" => $provider,
+            "provider" => $provider,
         ];
     }
     public function findOrCreate($social_user)

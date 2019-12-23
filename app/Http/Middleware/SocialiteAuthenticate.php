@@ -26,12 +26,12 @@ class SocialiteAuthenticate
             } catch (\Exception $e) {
                 return abort(401, "Invalid Credentials");
             }
-            // dd($social_user);
+            
             $user = User::where('email', $social_user['email'])->first();
             $request->setUserResolver(function () use ($user) {
                 return $user;
             });
-            // dd($user);
+            
             if ($user) {
                 $request->merge(['user' => $user ]);
                 return $next($request);

@@ -33,7 +33,6 @@ class SocialiteAuthenticate
             });
             
             if ($user) {
-                $request->merge(['user' => $user ]);
                 return $next($request);
             }
         }

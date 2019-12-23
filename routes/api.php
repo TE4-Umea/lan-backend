@@ -24,7 +24,8 @@ Route::prefix('/auth/')->group(function () {
     Route::get('{provider}/callback', 'Auth\SocialiteController@handleProviderCallback');
 
     Route::middleware('multi-auth')->group(function () {
-        Route::get('/user', function (Request $request) {
+        
+        Route::get('user', function (Request $request) {
             return ["user" => $request->user()];
         });
         Route::post('/logout', 'Auth\PassportAuthController@logout')->name('auth.logout');

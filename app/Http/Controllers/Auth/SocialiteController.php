@@ -27,7 +27,8 @@ class SocialiteController extends Controller
     * Obtain the user information from given provider.
     *
     * @return \Illuminate\Http\Response
-    */public function handleProviderCallback($provider)
+    */
+    public function handleProviderCallback($provider)
     {
         $social_user = Socialite::driver($provider)->stateless()->user();    // return the Laravel Passport access token response
         // dd([$social_user, $provider]);
@@ -43,7 +44,6 @@ class SocialiteController extends Controller
         try {
             User::firstOrFail()->where('email', $social_user->email);
         } catch (ModelNotFoundException $e) {
-            // dd(["This user does not exist", $social_user]);
             User::create([
                 "name" => $social_user->name,
                 "email" => $social_user->email,

@@ -17,10 +17,11 @@ class SocialiteAuthenticate
      */
     public function handle($request, Closure $next)
     {
-        if($request->filled('provider')) {
+
+        if($request->header('provider')) {
             try {
 
-                $social_user = Socialite::driver($request->provider)->
+                $social_user = Socialite::driver($request->header('provider'))->
                     stateless()->
                     userFromToken($request->bearerToken());
             } catch (\Exception $e) {

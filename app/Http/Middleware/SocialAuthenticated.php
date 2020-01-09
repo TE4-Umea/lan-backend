@@ -18,7 +18,7 @@ class SocialAuthenticated
      */
     public function handle($request, Closure $next)
     {
-        if(!(strlen($request->header('provider')) > 0)) {            
+        if(!(strlen($request->header('provider')) > 0)) {
             return app(Authenticate::class)->handle($request, function ($request) use ($next) {
                 return $next($request);
             }, "api");

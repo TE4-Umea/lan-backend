@@ -20,7 +20,6 @@ class SocialiteAuthenticate
 
         if($request->header('provider')) {
             try {
-
                 $social_user = Socialite::driver($request->header('provider'))->stateless()->userFromToken($request->bearerToken());
             } catch (\Exception $e) {
                 return abort(401, "Invalid Credentials");

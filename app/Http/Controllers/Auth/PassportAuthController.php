@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Auth;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use \App\User;
 use Illuminate\Support\Facades\Hash;
 
-class AuthController extends Controller
+class PassportAuthController extends Controller
 {
 
     public function login(Request $request)
@@ -24,7 +25,6 @@ class AuthController extends Controller
             ]);
             return $response->getBody();
         } catch (\GuzzleHttp\Exception\BadResponseException $e) {
-            dd($e);
             if ($e->getCode() === 400) {
                 return response()->json('Invalid Request. Please enter a email or a password.', $e->getCode());
             } else if ($e->getCode() === 401) {
@@ -41,6 +41,7 @@ class AuthController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6',
         ]);
+        
         return User::create([
             'name' => $request->name,
             'email' => $request->email,

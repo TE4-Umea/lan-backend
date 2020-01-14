@@ -31,7 +31,7 @@ class EventController extends Controller
 
     }
 
-    public function delete(){
+    public function destroy(){
 
     }
 }

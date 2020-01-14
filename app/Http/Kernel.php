@@ -63,6 +63,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'multi-auth' => \App\Http\Middleware\SocialAuthenticated::class,
         'social-auth' => \App\Http\Middleware\SocialiteAuthenticate::class,
+        'admin' => \App\Http\Middleware\CheckAdmin::class
     ];
 
     /**

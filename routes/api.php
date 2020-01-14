@@ -25,6 +25,13 @@ Route::prefix('/auth/')->group(function () {
         
         Route::get('user', 'Auth\UserController');
         Route::post('/logout', 'Auth\PassportAuthController@logout')->name('auth.logout');
+    
+        Route::middleware('admin')->group(function () {    
+           
+            Route::post('event/create', 'EventController@store')->name('event.create');
+        
+        });
+    
     });
 
     Route::post('login', 'Auth\PassportAuthController@login')->name('auth.login');

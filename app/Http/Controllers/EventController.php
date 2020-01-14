@@ -8,21 +8,29 @@ use App\Event;
 
 class EventController extends Controller
 {
-    public function create($event){
+    public function store(Request $event){
+
+        $validatedData = $event->validate([
+            'title' => 'bail|requried|max:32|string',
+            'short_info' => 'bail|requried|max:255|string',
+            'rules_id' => 'bail|requried|exists:event_rules,id',
+            'start_date' => 'bail|requried|date|after_or_equal:today',
+            'end_date' => 'bail|requried|date|after_or_equal:start_date',
+            'registration_closes_at' => 'bail|requried|date|before_or_equal:start_date'
+        ]);
+
+        $data = Event::create($validatedData);
         
-        Event::create([
-            'title' => $event('title'),
-            'short_info' => $event('short_info'),
-            'rules_id' => $event('rules_id'),
-            'start_date' => $event('start_date'),
-            'end_date' => $event('end_date'),
-            'registration_closes_at' => $event('registration_closes_at')
-            ]);
-        return view('welcome');
+        return [
+            'message' => 'Event was created',
+            'data' => $data
+        ];//Success Page
     }
+
     public function show(){
 
     }
+
     public function delete(){
 
     }

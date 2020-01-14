@@ -29,7 +29,7 @@ Route::prefix('/auth/')->group(function () {
         Route::middleware('admin')->group(function () {    
            
             Route::post('event/create', 'EventController@store')->name('event.create');
-        
+            Route::patch('event/rules/edit', 'EventRulesController@update')->name('event.rules.update');
         });
     
     });

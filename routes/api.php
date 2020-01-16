@@ -38,7 +38,7 @@ Route::group(['prefix' => '/admin/',  'middleware' => ['multi-auth', 'admin']], 
     });
 });
 
-Route::group(['prefix' => '/event/',  ], function() {
+Route::group(['prefix' => '/event/',  'middleware' => ['multi-auth']], function() {
     Route::post('register', 'EventRegistrationsController@store')->name('event.register');
     Route::get('latest', 'EventController@latest')->name('event.latest');
     Route::get('{id}/registration', 'EventController@registered')->name('event.registered');

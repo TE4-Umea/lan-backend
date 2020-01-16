@@ -38,5 +38,5 @@ Route::group(['prefix' => '/admin/',  'middleware' => ['multi-auth', 'admin']], 
     });
 });
 Route::group(['prefix' => '/event/',  'middleware' => ['multi-auth']], function() {
-    Route::post('register', 'EventRegisterController@store')->name('event.register');
+    Route::post('register', 'EventRegistrationsController@store')->name('event.register');
 });

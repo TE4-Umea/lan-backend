@@ -31,8 +31,7 @@ Route::prefix('/auth/')->group(function () {
     Route::post('register', 'Auth\PassportAuthController@register')->name('auth.register');
 });
 
-Route::group(['prefix' => '/admin/',  'middleware' => ['multi-auth', 'admin']], function()
-{
+Route::group(['prefix' => '/admin/',  'middleware' => ['multi-auth', 'admin']], function() {
     Route::prefix('event/')->group(function () {
         Route::post('create', 'EventController@store')->name('event.create');
         Route::patch('rules/edit', 'EventRulesController@update')->name('event.rules.update');

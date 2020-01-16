@@ -37,8 +37,9 @@ Route::group(['prefix' => '/admin/',  'middleware' => ['multi-auth', 'admin']], 
         Route::patch('rules/edit', 'EventRulesController@update')->name('event.rules.update');
     });
 });
-Route::group(['prefix' => '/event/',  'middleware' => ['multi-auth']], function() {
+
+Route::group(['prefix' => '/event/',  ], function() {
     Route::post('register', 'EventRegistrationsController@store')->name('event.register');
     Route::get('latest', 'EventController@latest')->name('event.latest');
-    Route::get('registered', 'EventController@registered')->name('event.registered');
+    Route::get('{id}/registration', 'EventController@registered')->name('event.registered');
 });

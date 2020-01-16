@@ -20,7 +20,7 @@ class CreateRegistrationsTable extends Migration
             $table->integer('room_id');
             $table->string('group_code', 64);
             $table->string('setup_type', 32);
-            $table->boolean('checked_in');
+            $table->boolean('checked_in')->default(0);
             $table->timestamps();
         });
     }

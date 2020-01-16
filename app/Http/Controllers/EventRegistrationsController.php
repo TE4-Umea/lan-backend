@@ -20,6 +20,7 @@ class EventRegistrationsController extends Controller
             'group_code' => $validatedRegistration->group_code,
             'setup_type' => $validatedRegistration->setup_type
         ]);
+        
         return [
             'message' => 'Registration successful',
             'data' => $data

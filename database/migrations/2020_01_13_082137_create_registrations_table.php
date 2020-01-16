@@ -18,7 +18,7 @@ class CreateRegistrationsTable extends Migration
             $table->integer('user_id');
             $table->integer('event_id');
             $table->integer('room_id');
-            $table->string('group_code', 64);
+            $table->string('group_code', 64)->nullable();
             $table->string('setup_type', 32);
             $table->boolean('checked_in')->default(0);
             $table->timestamps();

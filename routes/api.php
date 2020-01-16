@@ -25,15 +25,16 @@ Route::prefix('/auth/')->group(function () {
         
         Route::get('user', 'Auth\UserController');
         Route::post('/logout', 'Auth\PassportAuthController@logout')->name('auth.logout');
-    
-        Route::middleware('admin')->group(function () {    
-           
-            Route::post('event/create', 'EventController@store')->name('event.create');
-            Route::patch('event/rules/edit', 'EventRulesController@update')->name('event.rules.update');
-        });
-    
     });
 
     Route::post('login', 'Auth\PassportAuthController@login')->name('auth.login');
     Route::post('register', 'Auth\PassportAuthController@register')->name('auth.register');
+});
+
+Route::group(['prefix' => '/admin/',  'middleware' => ['multi-auth', 'admin']], function()
+{
+    Route::prefix('event/')->group(function () {
+        Route::post('create', 'EventController@store')->name('event.create');
+        Route::patch('rules/edit', 'EventRulesController@update')->name('event.rules.update');
+    });
 });

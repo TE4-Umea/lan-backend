@@ -37,3 +37,6 @@ Route::group(['prefix' => '/admin/',  'middleware' => ['multi-auth', 'admin']], 
         Route::patch('rules/edit', 'EventRulesController@update')->name('event.rules.update');
     });
 });
+Route::group(['prefix' => '/event/',  'middleware' => ['multi-auth']], function() {
+    Route::post('register', 'EventRegisterController@store')->name('event.register');
+});

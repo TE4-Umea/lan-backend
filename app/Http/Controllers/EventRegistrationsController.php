@@ -30,4 +30,15 @@ class EventRegistrationsController extends Controller
     public function show($id){
         return EventRegistrations::findOrFail($id);
     }
+
+    public function latest()
+    {
+        
+    }
+    public function findEventRegistration(Request $request){
+        // $x = Event::find($request->id)->first()->registrations()->where($request->user()->id)->first();
+        return $registration = EventRegistrations::where('user_id', $request->user()->id)
+        ->where('event_id', $request->id)
+        ->firstOrFail();
+    }
 }

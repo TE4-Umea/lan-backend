@@ -27,8 +27,12 @@ class EventController extends Controller
         ];//Success Page
     }
 
-    public function show(){
-
+    public function show($id) {
+        return Event::findOrFail($id);
+    }
+    
+    public function latest() {
+        return Event::latest();
     }
 
     public function destroy(){

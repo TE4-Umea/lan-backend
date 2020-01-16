@@ -14,7 +14,12 @@ class Event extends Model
         'end_date',
         'registration_closes_at'
     ];
-    public function event(){
+
+    public function registrations() {
+        return $this->hasMany('App\EventRegistrations');
+    }
+
+    public function rules(){
         return $this->hasOne('App\EventRules');
     }
 }

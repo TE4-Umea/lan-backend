@@ -32,7 +32,7 @@ class EventController extends Controller
     }
     
     public function latest() {
-        return Event::latest();
+        return Event::latest('id')->firstOrFail();
     }
 
     public function destroy(){

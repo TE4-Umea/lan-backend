@@ -18,6 +18,10 @@ class CreateEventRulesTable extends Migration
             $table->string('body');
             $table->timestamps();
         });
+
+        DB::table('event_rules')->insert([
+            'body' => '',
+        ]);
     }
 
     /**

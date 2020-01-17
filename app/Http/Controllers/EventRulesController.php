@@ -7,10 +7,12 @@ use App\EventRules;
 
 class EventRulesController extends Controller
 {
-    public function update(Request $eventRules){
-        return EventRules::updateOrCreate($eventRules->validate([
-            'body' => 'bail|required|max:1024|string'
-        ]));
+    public function update(Request $request){
+        $validated = $request->validate([
+            'id' => 'bail|required',
+            'body' => 'bail|required|string'
+        ]);
+        return EventRules::updateOrCreate(['id' => $validated['id']], ['body' => $validated['body']]);
     }
     
     public function show($id){

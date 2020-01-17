@@ -16,8 +16,7 @@ class CheckAdmin
     public function handle($request, Closure $next)
     {
         if($request->user()->admin == true){
-            return redirect('Nånstans jag inte vet');
+            return $next($request);
         }
-        return $next($request);
     }
 }

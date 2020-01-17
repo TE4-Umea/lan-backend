@@ -2,9 +2,6 @@
 
 use Illuminate\Http\Request;
 
-header('Access-Control-Allow-Origin:  *');
-header('Access-Control-Allow-Methods:  POST, GET, OPTIONS, PUT, DELETE');
-header('Access-Control-Allow-Headers:  Content-Type, X-Auth-Token, Origin, Authorization, provider');
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -39,9 +36,11 @@ Route::group(['prefix' => '/admin/',  'middleware' => ['multi-auth', 'admin']], 
 });
 
 Route::group(['prefix' => '/event/',  'middleware' => ['multi-auth']], function() {
-    Route::post('register', 'EventRegistrationsController@store')->name('event.register');
     Route::get('latest', 'EventController@latest')->name('event.latest');
+    Route::post('register', 'EventRegistrationsController@store')->name('event.register');
     Route::get('{id}/registration', 'EventController@registered')->name('event.registered');
-    Route::put('rules/{id}/read', 'EventRulesController@show')->name('event.rules.show');
+    
+    Route::get('rules/{id}/read', 'EventRulesController@show')->name('event.rules.show');
+
     Route::post('id', 'EventRegistrationsController@findEventRegistration')->name('event.registerId');
 });

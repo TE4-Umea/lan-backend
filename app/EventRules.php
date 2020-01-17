@@ -9,7 +9,7 @@ class EventRules extends Model
     protected $fillable = [
         'body'
     ];
-    public function eventRules(){
+    public function events(){
         return $this->belongsToMany('App\Event');
     }
 }

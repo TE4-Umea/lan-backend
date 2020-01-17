@@ -42,5 +42,6 @@ Route::group(['prefix' => '/event/',  'middleware' => ['multi-auth']], function(
     Route::post('register', 'EventRegistrationsController@store')->name('event.register');
     Route::get('latest', 'EventController@latest')->name('event.latest');
     Route::get('{id}/registration', 'EventController@registered')->name('event.registered');
+    Route::put('rules/{id}/read', 'EventRulesController@show')->name('event.rules.show');
     Route::post('id', 'EventRegistrationsController@findEventRegistration')->name('event.registerId');
 });

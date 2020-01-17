@@ -12,6 +12,7 @@ class EventRulesController extends Controller
             'body' => 'bail|required|max:1024|string'
         ]));
     }
+    
     public function show($id){
         return EventRules::findOrFail($id);
     }

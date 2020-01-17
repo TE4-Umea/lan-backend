@@ -44,7 +44,6 @@ class SocialiteController extends Controller
                 "name" => $social_user->name,
                 "email" => $social_user->email,
                 "password" =>  Hash::make(Str::random(52)),
-                "student" => false,
                 "email_verified_at" => now()
             ]);
         }

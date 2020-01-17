@@ -17,6 +17,7 @@ class CreateRoomsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name', 32);
             $table->integer('max_capacity');
+            $table->timestamps();
         });
     }
 

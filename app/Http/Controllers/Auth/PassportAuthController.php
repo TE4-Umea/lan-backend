@@ -45,6 +45,7 @@ class PassportAuthController extends Controller
         return User::create([
             'name' => $request->name,
             'email' => $request->email,
+            "student" => false,
             'password' => Hash::make($request->password),
         ]);
     }

@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class EventRegistrations extends Model
 {
+    protected $table = "registrations";
+    
     protected $fillable = [
         'user_id',
         'room_id',

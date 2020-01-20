@@ -18,9 +18,9 @@ class CreateEventsTable extends Migration
             $table->string('title', 32);
             $table->string('short_info', 512);
             $table->integer('rules_id')->default(1);
-            $table->timestamp('start_date', 0)->nullable();
-            $table->timestamp('end_date', 0)->nullable();
-            $table->timestamp('registration_closes_at')->nullable();
+            $table->dateTime('start_date', 0)->nullable();
+            $table->dateTime('end_date', 0)->nullable();
+            $table->dateTime('registration_closes_at')->nullable();
             $table->timestamps();
         });
     }

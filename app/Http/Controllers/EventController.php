@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Carbon;
 use App\Event;
 
 class EventController extends Controller
@@ -19,14 +19,24 @@ class EventController extends Controller
             'registration_closes_at' => 'bail|required|date|before_or_equal:start_date'
         ]);
 
-        $data = Event::create($validatedData);
+        $data = Event::create([
+            "title" => $validatedData['title'],
+            "short_info" => $validatedData['short_info'],
+            "rules_id" => $validatedData['rules_id'],
+            "start_date"=> $this->parseDate($validatedData['start_date']),
+            "end_date"=> $this->parseDate($validatedData['end_date']),
+            "registration_closes_at"=> $this->parseDate($validatedData['registration_closes_at'])
+            
+        ]);
         
         return [
             'message' => 'Event was created',
             'data' => $data
         ];//Success Page
     }
-
+    protected function parseDate($date) {
+        return Carbon::createFromFormat('Y-m-d\TH:i:s.uO', $date)->format('Y-m-d H:i');
+    }
     public function show($id) {
         return Event::findOrFail($id);
     }

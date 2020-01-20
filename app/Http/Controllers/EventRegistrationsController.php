@@ -42,11 +42,10 @@ class EventRegistrationsController extends Controller
     }*/
     public function show(Request $request){
         // $x = Event::find($request->id)->first()->registrations()->where($request->user()->id)->first();
-        return $request = EventRegistrations::where('user_id', $request->user()->id)
+        $registration = collect(EventRegistrations::where('user_id', $request->user()->id)
         ->where('event_id', $request->route('id'))
-        ->firstOrFail();
-        
-        $hashedId = Hashids::encode($registration->id);
+        ->firstOrFail());
+        $hashedId = Hashids::encode($registration['id']);
         $registration->put('hashid', $hashedId);
         return $registration;
     }

@@ -33,7 +33,11 @@ class EventRegistrationsController extends Controller
         $id = Hashids::decode($hashid);
 
         //TODO: Send a broadcasting event when this is triggered;
-        EventRegistrations::where('id', $id)->update(['checked_in'=> 1]);
+        $data = EventRegistrations::where('id', $id)->update(['checked_in'=> 1]);
+        return [
+            'message' => 'Registration successful',
+            'data' => $data
+        ];
     }
     
    

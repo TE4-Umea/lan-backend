@@ -29,22 +29,23 @@ class EventRegistrationsController extends Controller
         ];
     }
 
-    public function latest()
-    {
-        
+    public function update($hashid) {
+        $id = Hashids::decode($hashid);
+
+        //TODO: Send a broadcasting event when this is triggered;
+        $data = EventRegistrations::where('id', $id)->update(['checked_in'=> 1]);
+        return [
+            'message' => 'Registration successful',
+            'data' => $data
+        ];
     }
     
-    /*public function findEventRegistration(Request $request){
-        // $x = Event::find($request->id)->first()->registrations()->where($request->user()->id)->first();
-        return $request = EventRegistrations::where('user_id', $request->user()->id)
-        ->where('event_id', $request->id)
-        ->firstOrFail();
-    }*/
+   
     public function show(Request $request){
-        // $x = Event::find($request->id)->first()->registrations()->where($request->user()->id)->first();
         $registration = collect(EventRegistrations::where('user_id', $request->user()->id)
         ->where('event_id', $request->route('id'))
         ->firstOrFail());
+   
         $hashedId = Hashids::encode($registration['id']);
         $registration->put('hashid', $hashedId);
         return $registration;

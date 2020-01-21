@@ -32,6 +32,8 @@ Route::group(['prefix' => '/admin/',  'middleware' => ['multi-auth', 'admin']], 
     Route::prefix('event/')->group(function () {
         Route::post('create', 'EventController@store')->name('event.create');
         Route::put('rules/update', 'EventRulesController@update')->name('event.rules.update');
+        
+        Route::put('registration/{hashid}/update', 'EventRegistrationsController@update')->name('event.registration.update');
     });
 });
 

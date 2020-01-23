@@ -9,19 +9,20 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use App\Event;
 
-class RegistrationChange implements ShouldBroadcast
+class NewEventPublished implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-    public $registration;
+    public $event;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($registration)
+    public function __construct(Event $event)
     {
-        $this->registration = $registration;
+        $this->event = $event;
     }
 
     /**
@@ -31,6 +32,6 @@ class RegistrationChange implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('event');
+        return new Channel('public');
     }
 }

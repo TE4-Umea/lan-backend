@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use App\Events\NewEventPublished;
 use App\Event;
 
 class EventController extends Controller
@@ -28,6 +29,8 @@ class EventController extends Controller
             "registration_closes_at"=> $this->parseDate($validatedData['registration_closes_at'])
             
         ]);
+
+        NewEventPublished::dispatch($data);
         
         return [
             'message' => 'Event was created',

@@ -30,7 +30,7 @@ return [
             'path' => env('PUSHER_APP_PATH'),
             'capacity' => null,
             'enable_client_messages' => false,
-            'enable_statistics' => true,
+            'enable_statistics' => false,
         ],
     ],
 
@@ -69,7 +69,9 @@ return [
      * the existing middleware. Or, you can simply stick with this list.
      */
     'middleware' => [
-        'web',
+        'api',
+        'multi-auth', 
+        'admin',
         Authorize::class,
     ],
 

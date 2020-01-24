@@ -10,7 +10,7 @@
 | used to check if an authenticated user can listen to the channel.
 |
 */
-Broadcast::channel('event.{id}', function () {
+Broadcast::channel('User.{id}', function () {
     return true;
     // return (int) $user->id === (int) $id;
 });

@@ -33,6 +33,6 @@ class RegistrationUpdated implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('event.1');
+        return new PrivateChannel('User.' . $this->userid);
     }
 }

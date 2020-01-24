@@ -17,14 +17,13 @@ class SocialiteAuthenticate
      */
     public function handle($request, Closure $next)
     {
+        try {
+            $user = User::where('email', 
+                Socialite::driver($request->header('provider'))
+                    ->stateless()
+                    ->userFromToken(
+                        $request->bearerToken())['email'])->first();
 
-        if($request->header('provider')) {
-            try {
-                $social_user = Socialite::driver($request->header('provider'))->stateless()->userFromToken($request->bearerToken());
-            } catch (\Exception $e) {
-                return abort(401, "Invalid Credentials");
-            }
-            $user = User::where('email', $social_user['email'])->first();
             $request->setUserResolver(function () use ($user) {
                 return $user;
             });
@@ -32,7 +31,8 @@ class SocialiteAuthenticate
             if ($user) {
                 return $next($request);
             }
+        } catch (\Exception $e) {
+            return abort(401, "Invalid Credentials");
         }
-        return abort(401, "Invalid Credentials");
     }
 }

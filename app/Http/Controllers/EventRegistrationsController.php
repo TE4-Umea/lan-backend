@@ -17,14 +17,16 @@ class EventRegistrationsController extends Controller
             'setup_type' => 'required',
         ]);
 
-        $data = EventRegistrations::create([
+        $data = collect(EventRegistrations::create([
             'user_id' => $request->user()->id,
             'event_id' => $validatedRegistration['event_id'],
             'guardian' => $validatedRegistration['guardian'],
             'group_code' => $validatedRegistration['group_code'],
             'setup_type' => $validatedRegistration['setup_type']
-        ]);
+        ]));
         
+        $hashedId = Hashids::encode($data['id']);
+        $data->put('hashid', $hashedId);
         return [
             'message' => 'Registration successful',
             'data' => $data

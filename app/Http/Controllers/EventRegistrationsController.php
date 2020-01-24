@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\EventRegistrations;
 use Vinkla\Hashids\Facades\Hashids;
+use App\Events\RegistrationUpdated;
+
 class EventRegistrationsController extends Controller
 {
     public function store(Request $request){
@@ -15,14 +17,16 @@ class EventRegistrationsController extends Controller
             'setup_type' => 'required',
         ]);
 
-        $data = EventRegistrations::create([
+        $data = collect(EventRegistrations::create([
             'user_id' => $request->user()->id,
             'event_id' => $validatedRegistration['event_id'],
             'guardian' => $validatedRegistration['guardian'],
             'group_code' => $validatedRegistration['group_code'],
             'setup_type' => $validatedRegistration['setup_type']
-        ]);
+        ]));
         
+        $hashedId = Hashids::encode($data['id']);
+        $data->put('hashid', $hashedId);
         return [
             'message' => 'Registration successful',
             'data' => $data
@@ -32,8 +36,9 @@ class EventRegistrationsController extends Controller
     public function update($hashid) {
         $id = Hashids::decode($hashid);
 
-        //TODO: Send a broadcasting event when this is triggered;
-        $data = EventRegistrations::where('id', $id)->update(['checked_in'=> 1]);
+        EventRegistrations::where('id', $id)->update(['checked_in'=> 1]);
+        $data = EventRegistrations::where('id', $id)->first();
+        RegistrationUpdated::dispatch($data);
         return [
             'message' => 'Registration successful',
             'data' => $data

@@ -13,7 +13,6 @@ use Illuminate\Queue\SerializesModels;
 class RegistrationUpdated implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-    public $userId;
     public $registration;
     /**
      * Create a new event instance.

@@ -13,16 +13,14 @@ use Illuminate\Queue\SerializesModels;
 class RegistrationUpdated implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-    private $userId;
     public $registration;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($userId, $registration)
-    {
-        $this->userId = $userId; 
+    public function __construct($registration)
+    { 
         $this->registration = $registration;
     }
 
@@ -33,6 +31,6 @@ class RegistrationUpdated implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('event.1');
+        return new PrivateChannel('User.' . $this->registration->user_id);
     }
 }

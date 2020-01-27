@@ -15,14 +15,13 @@ class EventNotificationsController extends Controller
             'event_id' => 'bail|required|integer',    
         ]);
         $data = Notification::create($validatedData);
-    return [
-        'message' => 'Event was created',
-        'data' => $data
-    ];
+        return [
+            'message' => 'Event was created',
+            'data' => $data
+        ];
     }
 
-    public function show($id){
-        return Event::find($id)->first()->notifications();
-        //return Notification::where('event_id', '=', $event_id)->get();
+    public function show(Event $event){
+        return $event->notifications()->get();
     }
 }

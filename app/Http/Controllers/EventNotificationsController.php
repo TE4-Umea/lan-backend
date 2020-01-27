@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Notification;
+use App\Event;
 
 class EventNotificationsController extends Controller
 {
@@ -13,11 +14,15 @@ class EventNotificationsController extends Controller
             'body' => 'bail|required|max:255|string',
             'event_id' => 'bail|required|integer',    
         ]);
-        Notification::create($validatedData);
+        $data = Notification::create($validatedData);
+    return [
+        'message' => 'Event was created',
+        'data' => $data
+    ];
     }
 
-    public function show($event_id){
-        return Notification::where('event_id', '=', $event_id)->get();
-        
+    public function show($id){
+        return Event::find($id)->first()->notifications();
+        //return Notification::where('event_id', '=', $event_id)->get();
     }
 }

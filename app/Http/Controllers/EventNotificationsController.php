@@ -7,7 +7,7 @@ use App\Notification;
 
 class EventNotificationsController extends Controller
 {
-    public function store($notification){
+    public function store(Request $notification){
         $validatedData = $notification->validate([
             'title' => 'bail|required|max:32|string',
             'body' => 'bail|required|max:255|string',
@@ -16,7 +16,8 @@ class EventNotificationsController extends Controller
         Notification::create($validatedData);
     }
 
-    public function show(){
+    public function show($event_id){
+        return Notification::where('event_id', '=', $event_id)->get();
         
     }
 }

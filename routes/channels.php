@@ -13,3 +13,9 @@
 Broadcast::channel('User.{id}', function ($user,  $id) {
     return (int) $user->id === (int) $id;
 });
+Broadcast::channel('Event.{id}', function ($user,  $id) {
+    return true;
+    // $registration = \App\EventRegistrations::where("event_id", "=", $id)->where("user_id", "=", $user->id)->first();
+    // return $registration->checked_in;
+    // return (int) $user->id === (int) $id;
+});

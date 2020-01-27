@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Notification;
 use App\Event;
+use App\Events\NotificationCreated;
 
 class EventNotificationsController extends Controller
 {
@@ -15,6 +16,8 @@ class EventNotificationsController extends Controller
             'event_id' => 'bail|required|integer',    
         ]);
         $data = Notification::create($validatedData);
+        NotificationCreated::dispatch($data);
+
         return [
             'message' => 'Event was created',
             'data' => $data

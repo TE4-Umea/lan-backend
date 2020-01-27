@@ -34,6 +34,7 @@ Route::group(['prefix' => '/admin/',  'middleware' => ['multi-auth', 'admin']], 
         Route::put('rules/update', 'EventRulesController@update')->name('event.rules.update');
         
         Route::put('registration/{hashid}/update', 'EventRegistrationsController@update')->name('event.registration.update');
+        Route::post('notification/create', 'EventNotificationsController@store')->name('event.notification.create');
     });
 });
 
@@ -42,4 +43,5 @@ Route::group(['prefix' => '/event/',  'middleware' => ['multi-auth']], function(
     Route::post('register', 'EventRegistrationsController@store')->name('event.register');
     Route::get('{id}/registration', 'EventRegistrationsController@show')->name('event.registered');
     Route::get('rules/{id}/read', 'EventRulesController@show')->name('event.rules.show');
+    Route::get('{event}/notifications/read', 'EventNotificationsController@show')->name('event.notification.show');
 });

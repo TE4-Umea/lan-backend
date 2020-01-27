@@ -22,4 +22,8 @@ class Event extends Model
     public function rules(){
         return $this->hasOne('App\EventRules');
     }
+    
+    public function notifications(){
+        return $this->hasMany('App\Notification');
+    }
 }

@@ -13,3 +13,7 @@
 Broadcast::channel('User.{id}', function ($user,  $id) {
     return (int) $user->id === (int) $id;
 });
+Broadcast::channel('Event.{id}', function ($user,  $id) {
+    return \App\EventRegistrations::where('user_id', $user->id)
+        ->where('event_id', $id)->exists();
+});

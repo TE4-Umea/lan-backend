@@ -22,4 +22,9 @@ class EventRegistrations extends Model
     {
         return $this->hasOne('App\User', 'id', 'user_id');
     }
+
+    public function room()
+    {
+        return $this->hasOne('App\Room', 'id', 'room_id');
+    }
 }

@@ -47,12 +47,15 @@ class EventRegistrationsController extends Controller
     
    
     public function show(Request $request){
-        $registration = collect(EventRegistrations::where('user_id', $request->user()->id)
+        $registration = EventRegistrations::where('user_id', $request->user()->id)
         ->where('event_id', $request->route('id'))
-        ->firstOrFail());
-   
-        $hashedId = Hashids::encode($registration['id']);
-        $registration->put('hashid', $hashedId);
-        return $registration;
+        ->firstOrFail();
+
+        $collection = collect($registration);
+        
+        
+        $collection->put('hashid', Hashids::encode($collection['id']));
+        $collection->put('room', $registration->room);
+        return $collection;
     }
 }

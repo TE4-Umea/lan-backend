@@ -38,7 +38,7 @@ Route::group(['prefix' => '/admin/',  'middleware' => ['multi-auth', 'admin']], 
     });
     Route::prefix('placement/')->group(function () {
         Route::post('room/create', 'RoomController@store');
-        Route::get('rooms', 'RoomController@show');
+        Route::get('rooms/read', 'RoomController@show');
     });
 });
 

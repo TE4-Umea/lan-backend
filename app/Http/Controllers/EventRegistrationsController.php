@@ -9,6 +9,10 @@ use App\Events\RegistrationUpdated;
 
 class EventRegistrationsController extends Controller
 {
+    public function index(Event $event){
+        return $event->registrations;
+    }
+
     public function store(Request $request){
         $validatedRegistration = $request->validate([
             'event_id' => 'required',
@@ -46,9 +50,9 @@ class EventRegistrationsController extends Controller
     }
     
    
-    public function show(Request $request){
+    public function show(Request $request, $event){
         $registration = EventRegistrations::where('user_id', $request->user()->id)
-        ->where('event_id', $request->route('id'))
+        ->where('event_id', $event)
         ->firstOrFail();
 
         $collection = collect($registration);
@@ -58,4 +62,5 @@ class EventRegistrationsController extends Controller
         $collection->put('room', $registration->room);
         return $collection;
     }
+
 }

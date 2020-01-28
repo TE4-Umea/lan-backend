@@ -26,9 +26,15 @@ class RoomController extends Controller
     }
     
     public function update(Room $room, Request $req){
-        return $room->update($req->validate([
+        $data = $room->update($req->validate([
             'name' => 'bail|required|max:32|string',
             'max_capacity' => 'bail|required|integer' 
         ]));
+        
+        return [
+            'message' => 'Success',
+            'data' => $data
+        ];
+        
     }
 }

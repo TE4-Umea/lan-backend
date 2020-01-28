@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\EventRegistrations;
+use App\Event;
 use Vinkla\Hashids\Facades\Hashids;
 use App\Events\RegistrationUpdated;
+
+
 
 class EventRegistrationsController extends Controller
 {

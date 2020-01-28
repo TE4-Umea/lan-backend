@@ -37,4 +37,7 @@ class RoomController extends Controller
         ];
         
     }
+    public function destroy(Room $room){
+        return $room->delete();
+    }
 }

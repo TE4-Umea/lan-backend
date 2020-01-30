@@ -15,7 +15,7 @@ class CreateEventRulesTable extends Migration
     {
         Schema::create('event_rules', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('body');
+            $table->longText('body');
             $table->timestamps();
         });
 

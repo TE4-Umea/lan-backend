@@ -64,8 +64,9 @@ class EventRegistrationsController extends Controller
             'group_code' => 'nullable|alpha_dash',
             'guardian' => 'nullable|max:32',
             'setup_type' => 'nullable',
+            'room_id' => 'nullable|integer'
         ]);
-        $id->update($validatedRegistration);
+        $registration->update($validatedRegistration);
         $data = EventRegistrations::where('id', $registration->id)->first(); 
         RegistrationUpdated::dispatch($data);
 

@@ -34,12 +34,15 @@ Route::group(['prefix' => '/admin/',  'middleware' => ['multi-auth', 'admin']], 
         Route::put('rules/update', 'EventRulesController@update')->name('event.rules.update');
         
         Route::put('registration/{hashid}/update', 'EventRegistrationsController@update')->name('event.registration.update');
+        Route::patch('registration/{registration}/update', 'EventRegistrationsController@patch')->name('event.registration.patch');
         Route::get('{event}/registrations/read', 'EventRegistrationsController@index')->name('event.registrations.index');
         Route::post('notification/create', 'EventNotificationsController@store')->name('event.notification.create');
     });
     Route::prefix('placement/')->group(function () {
         Route::post('room/create', 'RoomController@store');
-        Route::get('rooms', 'RoomController@show');
+        Route::get('room/{room}/delete', 'RoomController@destroy');
+        Route::get('rooms/read', 'RoomController@show');
+
     });
 });
 

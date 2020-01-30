@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Room;
 
 class RoomController extends Controller
 {
@@ -35,5 +36,8 @@ class RoomController extends Controller
             'data' => $data
         ];
         
+    }
+    public function destroy(Room $room){
+        return $room->delete();
     }
 }

@@ -13,7 +13,12 @@ use App\Events\RegistrationUpdated;
 class EventRegistrationsController extends Controller
 {
     public function index(Event $event){
-        return $event->registrations;
+        $registrations = $event->registrations->first()->user;
+        //$user = $registrations->user_id;
+        return [
+            'registrations' => $registrations->first()->id
+            //'users' => $users
+        ];
     }
 
     public function store(Request $request){
@@ -52,7 +57,24 @@ class EventRegistrationsController extends Controller
         ];
     }
     
-   
+    public function patch(Request $request, EventRegistrations $registration){
+        $validatedRegistration = $request->validate([
+            'checked_in' => 'nullable|integer',
+            'event_id' => 'nullable|integer',
+            'group_code' => 'nullable|alpha_dash',
+            'guardian' => 'nullable|max:32',
+            'setup_type' => 'nullable',
+        ]);
+        $id->update($validatedRegistration);
+        $data = EventRegistrations::where('id', $registration->id)->first(); 
+        RegistrationUpdated::dispatch($data);
+
+        return [
+            'message' => 'Successful update',
+            'data' => $data
+        ];
+    }
+
     public function show(Request $request, $event){
         $registration = EventRegistrations::where('user_id', $request->user()->id)
         ->where('event_id', $event)

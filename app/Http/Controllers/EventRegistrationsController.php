@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\EventRegistrations;
 use App\Event;
+use App\User;
 use Vinkla\Hashids\Facades\Hashids;
 use App\Events\RegistrationUpdated;
 
@@ -12,8 +13,8 @@ use App\Events\RegistrationUpdated;
 
 class EventRegistrationsController extends Controller
 {
-    public function index(Event $event){
-        $registrationsWithUsers = EventRegistrations::rightJoin('users', 'users.id', '=', 'registrations.user_id')->get();
+    public function index($event){
+        $registrationsWithUsers = User::rightJoin('registrations', 'registrations.user_id', '=', 'users.id')->where('registrations.event_id', '=', $event)->get();
         return [
             'registrations' => $registrationsWithUsers
         ];

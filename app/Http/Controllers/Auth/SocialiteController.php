@@ -38,7 +38,7 @@ class SocialiteController extends Controller
     public function findOrCreate($social_user)
     {
         try {
-            User::firstOrFail()->where('email', $social_user->email);
+            User::where('email', $social_user->email)->firstOrFail();
         } catch (ModelNotFoundException $e) {
             User::create([
                 "name" => $social_user->name,

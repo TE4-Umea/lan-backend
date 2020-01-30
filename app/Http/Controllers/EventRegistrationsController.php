@@ -13,11 +13,9 @@ use App\Events\RegistrationUpdated;
 class EventRegistrationsController extends Controller
 {
     public function index(Event $event){
-        $registrations = $event->registrations->first()->user;
-        //$user = $registrations->user_id;
+        $registrationsWithUsers = EventRegistrations::rightJoin('users', 'users.id', '=', 'registrations.user_id')->get();
         return [
-            'registrations' => $registrations->first()->id
-            //'users' => $users
+            'registrations' => $registrationsWithUsers
         ];
     }
 

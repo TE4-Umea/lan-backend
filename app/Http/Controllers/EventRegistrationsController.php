@@ -13,11 +13,11 @@ use App\Events\RegistrationUpdated;
 
 class EventRegistrationsController extends Controller
 {
-    public function index($event){
+    public function index($event) {
         return User::rightJoin('registrations', 'registrations.user_id', '=', 'users.id')->where('registrations.event_id', '=', $event)->get();
     }
 
-    public function store(Request $request){
+    public function store(Request $request) {
         $validatedRegistration = $request->validate([
             'event_id' => 'required',
             'group_code' => 'nullable|alpha_dash',
@@ -53,7 +53,7 @@ class EventRegistrationsController extends Controller
         ];
     }
     
-    public function patch(Request $request, EventRegistrations $registration){
+    public function patch(Request $request, EventRegistrations $registration) {
         $validatedRegistration = $request->validate([
             'checked_in' => 'nullable|integer',
             'event_id' => 'nullable|integer',
@@ -72,7 +72,7 @@ class EventRegistrationsController extends Controller
         ];
     }
 
-    public function show(Request $request, $event){
+    public function show(Request $request, $event) {
         $registration = EventRegistrations::where('user_id', $request->user()->id)
         ->where('event_id', $event)
         ->firstOrFail();

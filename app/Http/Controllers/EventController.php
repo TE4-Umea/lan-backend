@@ -9,7 +9,7 @@ use App\Event;
 
 class EventController extends Controller
 {
-    public function store(Request $event){
+    public function store(Request $event) {
 
         $validatedData = $event->validate([
             'title' => 'bail|required|max:32|string',
@@ -48,7 +48,10 @@ class EventController extends Controller
         return Event::latest('id')->firstOrFail();
     }
 
-    public function destroy(){
+    public function destroy(Event $event) {
+        $event->notifications()->delete;
+        $event->registrations()->delete;
+        $event->delete;
 
     }
 }

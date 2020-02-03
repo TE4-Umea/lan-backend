@@ -29,6 +29,6 @@ class EventNotificationsController extends Controller
     }
     
     public function destroy(Event $event) {
-        $event->notifications()->delete;
+        $event->notifications()->delete();
     }
 }

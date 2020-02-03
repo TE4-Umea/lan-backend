@@ -31,6 +31,7 @@ Route::prefix('/auth/')->group(function () {
 Route::group(['prefix' => '/admin/',  'middleware' => ['multi-auth', 'admin']], function() {
     Route::prefix('event/')->group(function () {
         Route::post('create', 'EventController@store')->name('event.create');
+        Route::get('{event}/delete', 'EventController@destroy')->name('event.delete');
         Route::put('rules/update', 'EventRulesController@update')->name('event.rules.update');
         
         Route::put('registration/{hashid}/update', 'EventRegistrationsController@update')->name('event.registration.update');
@@ -42,7 +43,7 @@ Route::group(['prefix' => '/admin/',  'middleware' => ['multi-auth', 'admin']], 
         Route::post('room/create', 'RoomController@store');
         Route::get('room/{room}/delete', 'RoomController@destroy');
         Route::get('rooms/read', 'RoomController@show');
-
+        Route::patch('{group_code}/{room_id}/room/update', 'EventRegistrationsController@updateRoom');
     });
 });
 

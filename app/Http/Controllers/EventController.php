@@ -49,9 +49,13 @@ class EventController extends Controller
     }
 
     public function destroy(Event $event) {
-        $event->notifications()->delete;
-        $event->registrations()->delete;
-        $event->delete;
-
+        $event->notifications()->delete();
+        $event->registrations()->delete();
+        $event->delete();
+        $data = $event->registrations()->get();
+        return [
+            'message' => 'lolz',
+            'data' => $data
+        ];
     }
 }

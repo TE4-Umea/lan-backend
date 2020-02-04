@@ -20,7 +20,7 @@ class EventRegistrationsController extends Controller
     public function store(Request $request) {
         $validatedRegistration = $request->validate([
             'event_id' => 'required',
-            'group_code' => 'nullable|alpha_dash',
+            'group_code' => 'nullable|string|max:24',
             'guardian' => 'nullable|max:32',
             'setup_type' => 'required',
         ]);

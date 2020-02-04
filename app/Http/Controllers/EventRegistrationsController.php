@@ -29,7 +29,7 @@ class EventRegistrationsController extends Controller
             'user_id' => $request->user()->id,
             'event_id' => $validatedRegistration['event_id'],
             'guardian' => $validatedRegistration['guardian'],
-            'group_code' => $validatedRegistration['group_code'],
+            'group_code' => strtolower($validatedRegistration['group_code']),
             'setup_type' => $validatedRegistration['setup_type']
         ]));
         

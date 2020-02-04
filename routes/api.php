@@ -43,6 +43,7 @@ Route::group(['prefix' => '/admin/',  'middleware' => ['multi-auth', 'admin']], 
         Route::post('room/create', 'RoomController@store');
         Route::get('room/{room}/delete', 'RoomController@destroy');
         Route::get('rooms/read', 'RoomController@show');
+        Route::patch('room/update', 'EventRegistrationsController@updateRoom');
     });
 });
 

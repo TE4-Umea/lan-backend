@@ -71,6 +71,7 @@ class EventRegistrationsController extends Controller
             'data' => $data
         ];
     }
+    
     public function updateRoom(Request $request){
         $data = EventRegistrations::where('group_code', '=', $request->group_code)
         ->update(['room_id' => $request->room_id]);

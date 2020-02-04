@@ -54,4 +54,3 @@ Route::group(['prefix' => '/event/',  'middleware' => ['multi-auth']], function(
     Route::get('rules/{id}/read', 'EventRulesController@show')->name('event.rules.show');
     Route::get('{event}/notifications/read', 'EventNotificationsController@show')->name('event.notification.show');
 });
-Route::patch('room/update', 'EventRegistrationsController@updateRoom');

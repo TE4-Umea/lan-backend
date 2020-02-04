@@ -7,7 +7,7 @@ use App\Room;
 
 class RoomController extends Controller
 {
-    public function store(Request $room){
+    public function store(Request $room) {
         $validatedData = $room->validate([
             'name' => 'bail|required|max:32|string',
             'max_capacity' => 'bail|required|integer' 
@@ -21,11 +21,11 @@ class RoomController extends Controller
         ];
     }
 
-    public function show(){
+    public function show() {
         return Room::all();
     }
     
-    public function update(Room $room, Request $req){
+    public function update(Room $room, Request $req) {
         $data = $room->update($req->validate([
             'name' => 'bail|required|max:32|string',
             'max_capacity' => 'bail|required|integer' 
@@ -37,7 +37,7 @@ class RoomController extends Controller
         ];
         
     }
-    public function destroy(Room $room){
+    public function destroy(Room $room) {
         return $room->delete();
     }
 }

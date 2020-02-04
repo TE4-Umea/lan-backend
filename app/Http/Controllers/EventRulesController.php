@@ -7,7 +7,7 @@ use App\EventRules;
 
 class EventRulesController extends Controller
 {
-    public function update(Request $request){
+    public function update(Request $request) {
         $validated = $request->validate([
             'id' => 'bail|required',
             'body' => 'bail|required|string'
@@ -15,7 +15,7 @@ class EventRulesController extends Controller
         return EventRules::updateOrCreate(['id' => $validated['id']], ['body' => $validated['body']]);
     }
     
-    public function show($id){
+    public function show($id) {
         return EventRules::findOrFail($id);
     }
 }

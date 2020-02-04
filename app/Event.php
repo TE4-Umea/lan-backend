@@ -19,11 +19,11 @@ class Event extends Model
         return $this->hasMany('App\EventRegistrations');
     }
 
-    public function rules(){
+    public function rules() {
         return $this->hasOne('App\EventRules');
     }
     
-    public function notifications(){
+    public function notifications() {
         return $this->hasMany('App\Notification');
     }
 }

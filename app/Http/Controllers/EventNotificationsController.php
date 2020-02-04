@@ -9,7 +9,7 @@ use App\Events\NotificationCreated;
 
 class EventNotificationsController extends Controller
 {
-    public function store(Request $notification){
+    public function store(Request $notification ){
         $validatedData = $notification->validate([
             'title' => 'bail|required|max:32|string',
             'body' => 'bail|required|max:255|string',
@@ -24,7 +24,11 @@ class EventNotificationsController extends Controller
         ];
     }
 
-    public function show(Event $event){
+    public function show(Event $event) {
         return $event->notifications()->get();
+    }
+    
+    public function destroy(Event $event) {
+        $event->notifications()->delete();
     }
 }

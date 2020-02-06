@@ -12,28 +12,34 @@ use App\User;
 
 class SocialiteController extends Controller
 {
-    
+
     /**
      * Redirect the user to the GitHub authentication page.
      *
+     * @param $provider
      * @return \Illuminate\Http\Response
      */
     public function redirectToProvider($provider)
     {
-        return Socialite::driver($provider)->stateless()->redirect();
+        return Socialite::driver($provider)
+            ->stateless()
+            ->with(["access_type" => "offline", "prompt" => "consent select_account"])
+            ->redirect();
     }
 
     /**
-    * Obtain the user information from given provider.
-    *
-    * @return \Illuminate\Http\Response
-    */
+     * Obtain the user information from given provider.
+     *
+     * @param Request $provider
+     * @return \Illuminate\Http\Response
+     */
     public function handleProviderCallback($provider)
     {
         $social_user = Socialite::driver($provider)->stateless()->user();    // return the Laravel Passport access token response
+        // dd($social_user);
         $this->findOrCreate($social_user);
         $url = env('APP_FRONTEND_URL');
-        return redirect("{$url}/auth/callback?token={$social_user->token}&provider=$provider");
+        return redirect("{$url}/auth/callback?token={$social_user->token}&provider={$provider}&refreshToken={$social_user->refreshToken}");
     }
     public function findOrCreate($social_user)
     {

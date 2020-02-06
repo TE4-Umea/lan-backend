@@ -22,7 +22,6 @@ class SocialiteAuthenticate
     public function handle(Request $request, Closure $next, bool $newToken = false)
     {
         try {
-
             $user = User::where('email',
                 Socialite::driver($request->header('Provider'))
                     ->stateless()
@@ -44,8 +43,6 @@ class SocialiteAuthenticate
         } catch (\Exception $e) {
                 $newToken = $this->refreshToken($request);
                 if($newToken) {
-                    Log::debug(\GuzzleHttp\json_encode($newToken, JSON_PRETTY_PRINT));
-                    // $request->headers->set('Authorization', 'Bearer '. $newToken);
                     $request->headers->set('Authorization', 'Bearer ' . $newToken["access_token"]);
                     return $this->handle($request, $next, true);
                 }
@@ -57,7 +54,6 @@ class SocialiteAuthenticate
     {
         $config = Config('services.google');
 
-        // Set Client
         $client = new Google_Client;
         $client->setClientId($config['client_id']);
         $client->setClientSecret($config['client_secret']);

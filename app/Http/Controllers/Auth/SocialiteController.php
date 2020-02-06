@@ -36,7 +36,6 @@ class SocialiteController extends Controller
     public function handleProviderCallback($provider)
     {
         $social_user = Socialite::driver($provider)->stateless()->user();    // return the Laravel Passport access token response
-        // dd($social_user);
         $this->findOrCreate($social_user);
         $url = env('APP_FRONTEND_URL');
         return redirect("{$url}/auth/callback?token={$social_user->token}&provider={$provider}&refreshToken={$social_user->refreshToken}");

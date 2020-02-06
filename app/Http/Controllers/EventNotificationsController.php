@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Notification;
 use App\Event;
 use App\Events\NotificationCreated;
+use App\Http\Controllers\PushController;
 
 class EventNotificationsController extends Controller
 {
@@ -22,6 +23,7 @@ class EventNotificationsController extends Controller
             'message' => 'Event was created',
             'data' => $data
         ];
+        PushController::push($validatedData);
     }
 
     public function show(Event $event) {

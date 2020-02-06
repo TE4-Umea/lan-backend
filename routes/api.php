@@ -45,6 +45,9 @@ Route::group(['prefix' => '/admin/',  'middleware' => ['multi-auth', 'admin']], 
         Route::get('rooms/read', 'RoomController@show');
         Route::patch('room/update', 'EventRegistrationsController@updateRoom');
     });
+    Route::prefix('push-notification/')->group(function () {
+        Route::get('send','PushController@push')->name('push-notification.send');
+    });
 });
 
 Route::group(['prefix' => '/event/',  'middleware' => ['multi-auth']], function() {
@@ -53,4 +56,8 @@ Route::group(['prefix' => '/event/',  'middleware' => ['multi-auth']], function(
     Route::get('{event}/registration', 'EventRegistrationsController@show')->name('event.registered');
     Route::get('rules/{id}/read', 'EventRulesController@show')->name('event.rules.show');
     Route::get('{event}/notifications/read', 'EventNotificationsController@show')->name('event.notification.show');
+});
+
+Route::group(['prefix' =>'/push-notification/', 'middleware' => ['multi-auth']], function() {
+    Route::post('/subscribe','PushController@store');
 });

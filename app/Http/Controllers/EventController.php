@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use App\Events\NewEventPublished;
+use App\Events\EventDeleted;
 use App\Event;
 
 class EventController extends Controller
@@ -53,8 +54,10 @@ class EventController extends Controller
         $event->registrations()->delete();
         $event->delete();
         $data = $event->registrations()->get();
+        EventDeleted::dispatch();
+
         return [
-            'message' => 'lolz',
+            'message' => 'Event has been deleted',
             'data' => $data
         ];
     }

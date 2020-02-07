@@ -63,12 +63,11 @@ class EventRegistrationsController extends Controller
             'room_id' => 'nullable|integer'
         ]);
         $registration->update($validatedRegistration);
-        $data = EventRegistrations::where('id', $registration->id)->first(); 
-        RegistrationUpdated::dispatch($data);
+        RegistrationUpdated::dispatch($registration);
 
         return [
             'message' => 'Successful update',
-            'data' => $data
+            'data' => $registration
         ];
     }
     

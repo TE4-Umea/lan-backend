@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Notification;
 use App\Notifications\PushNotification;
 use App\User;
+use App\PushSubscription;
+
 
 
 class PushController extends Controller
@@ -16,12 +18,11 @@ class PushController extends Controller
             'keys.auth'   => 'required',
             'keys.p256dh' => 'required'
         ]);
-        
+
         $endpoint = $request->endpoint;
-        $token = $request->keys['auth'];
         $key = $request->keys['p256dh'];
         $user = $request->user();
-        $user->updatePushSubscription($endpoint, $key, $token);
+        $user->updatePushSubscription($endpoint, $key);
         
         return [
             'message' => 'Success',
@@ -31,7 +32,7 @@ class PushController extends Controller
     public function push() {
         Notification::send(User::all(), new PushNotification);
         return [
-            'message' => 'Notification successfully sent'
+            'message' => 'Notification successfully sent',
         ];
     }
 }

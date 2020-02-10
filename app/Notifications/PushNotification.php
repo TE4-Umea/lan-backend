@@ -3,9 +3,12 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Notifications\Notification;
+use NotificationChannels\WebPush\WebPushMessage;
+use NotificationChannels\WebPush\WebPushChannel;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Notifications\Notification;
+
 
 class PushNotification extends Notification
 {
@@ -32,12 +35,12 @@ class PushNotification extends Notification
         return [WebPushChannel::class];
     }
 
-    public function toWebPush($notifiable, $notification, $validatedData)
+    public function toWebPush($notifiable, $notification)
     {
         return (new WebPushMessage)
-            ->title($validatedData->title)
+            ->title('title')
             ->icon('/notification-icon.png')
-            ->body($validatedData->body)
+            ->body('body')
             ->action('View App', 'notification_action');
     }
 

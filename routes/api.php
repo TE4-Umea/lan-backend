@@ -13,13 +13,14 @@ use Illuminate\Http\Request;
 |
 */
 Route::get('/', 'IndexController');
+
 Route::prefix('/auth/')->group(function () {
     
     Route::get('{provider}/redirect', 'Auth\SocialiteController@redirectToProvider');
     Route::get('{provider}/callback', 'Auth\SocialiteController@handleProviderCallback');
 
     Route::middleware('multi-auth')->group(function () {
-        
+
         Route::get('user', 'Auth\UserController');
         Route::post('/logout', 'Auth\PassportAuthController@logout')->name('auth.logout');
     });
@@ -28,7 +29,13 @@ Route::prefix('/auth/')->group(function () {
     Route::post('register', 'Auth\PassportAuthController@register')->name('auth.register');
 });
 
+Route::get('/admins/read', 'AdminController@index')->middleware(['multi-auth', 'admin']);
+
 Route::group(['prefix' => '/admin/',  'middleware' => ['multi-auth', 'admin']], function() {
+    
+    Route::post('{id}/create', 'AdminController@store');
+    Route::delete('{id}/delete', 'AdminController@destroy');
+    
     Route::prefix('event/')->group(function () {
         Route::post('create', 'EventController@store')->name('event.create');
         Route::delete('{event}/delete', 'EventController@destroy')->name('event.delete');

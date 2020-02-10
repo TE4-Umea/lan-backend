@@ -34,13 +34,12 @@ Route::get('/admins/read', 'AdminController@index')->middleware(['multi-auth', '
 Route::group(['prefix' => '/admin/',  'middleware' => ['multi-auth', 'admin']], function() {
     
     Route::get('search', 'AdminController@search');
-    Route::post('{id}/create', 'AdminController@store');
-    Route::delete('{id}/delete', 'AdminController@destroy');
+    Route::patch('{user}/update', 'AdminController@update');
     
     Route::prefix('event/')->group(function () {
         Route::post('create', 'EventController@store')->name('event.create');
         Route::delete('{event}/delete', 'EventController@destroy')->name('event.delete');
-        Route::put('rules/update', 'EventRulesController@update')->name('event.rules.update');
+        Route::patch('rules/update', 'EventRulesController@update')->name('event.rules.update');
         
         Route::put('registration/{hashid}/update', 'EventRegistrationsController@update')->name('event.registration.update');
         Route::patch('registration/{registration}/update', 'EventRegistrationsController@patch')->name('event.registration.patch');

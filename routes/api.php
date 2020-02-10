@@ -33,6 +33,7 @@ Route::get('/admins/read', 'AdminController@index')->middleware(['multi-auth', '
 
 Route::group(['prefix' => '/admin/',  'middleware' => ['multi-auth', 'admin']], function() {
     
+    Route::get('search', 'AdminController@search');
     Route::post('{id}/create', 'AdminController@store');
     Route::delete('{id}/delete', 'AdminController@destroy');
     

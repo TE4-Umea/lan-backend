@@ -36,19 +36,20 @@ class PassportAuthController extends Controller
 
     public function register(Request $request)
     {
-        $request->validate([
+        $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6',
         ]);
         
         return User::create([
-            'name' => $request->name,
-            'email' => $request->email,
+            'name' => $validatedData->name,
+            'email' => $validatedData->email,
             "student" => false,
-            'password' => Hash::make($request->password),
+            'password' => Hash::make($validatedData->password),
         ]);
     }
+    
     public function logout()
     {
         auth()->user()->tokens->each(function ($token, $key) {

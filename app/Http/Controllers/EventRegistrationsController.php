@@ -63,18 +63,19 @@ class EventRegistrationsController extends Controller
             'room_id' => 'nullable|integer'
         ]);
         $registration->update($validatedRegistration);
-        $data = EventRegistrations::where('id', $registration->id)->first(); 
-        RegistrationUpdated::dispatch($data);
+        RegistrationUpdated::dispatch($registration);
 
         return [
             'message' => 'Successful update',
-            'data' => $data
+            'data' => $registration
         ];
     }
     
     public function updateRoom(Request $request){
-        $data = EventRegistrations::where('group_code', '=', $request->group_code)
-        ->update(['room_id' => $request->room_id]);
+        $code = $request->group_code ? $request->group_code : '';
+
+        $data = EventRegistrations::where('group_code', $code)
+            ->update(['room_id' => $request->room_id]);
         return [
             'message' => 'Success',
             'data' => $data

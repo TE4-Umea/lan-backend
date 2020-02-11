@@ -14,7 +14,6 @@ class Room extends Model
 
     public function registrations()
     {
-        // return $this->belongsToMany('App\EventRegistrations', 'id', 'room_id');
         return $this->hasMany('App\EventRegistrations');
     }
 }

@@ -14,7 +14,7 @@ class PassportAuthController extends Controller
     {
         $http = new \GuzzleHttp\Client;
         try {
-            $response = $http->post('localhost/oauth/token', [
+            $response = $http->post(route('passport.token'), [
                 'form_params' => [
                     'grant_type' => 'password',
                     'client_id' => config('services.passport.client_id'),

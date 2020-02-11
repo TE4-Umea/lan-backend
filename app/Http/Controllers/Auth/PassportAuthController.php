@@ -43,10 +43,10 @@ class PassportAuthController extends Controller
         ]);
         
         return User::create([
-            'name' => $validatedData->name,
-            'email' => $validatedData->email,
+            'name' => $validatedData['name'],
+            'email' => $validatedData['email'],
             "student" => false,
-            'password' => Hash::make($validatedData->password),
+            'password' => Hash::make($validatedData['password']),
         ]);
     }
     

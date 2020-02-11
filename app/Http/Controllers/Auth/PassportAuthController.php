@@ -14,7 +14,7 @@ class PassportAuthController extends Controller
     {
         $http = new \GuzzleHttp\Client;
         try {
-            $response = $http->post('/oauth/token', [
+            $response = $http->post(route('passport.token'), [
                 'form_params' => [
                     'grant_type' => 'password',
                     'client_id' => config('services.passport.client_id'),
@@ -31,7 +31,7 @@ class PassportAuthController extends Controller
             } else if ($e->getCode() === 401) {
                 return response()->json('Your credentials are incorrect. Please try again', $e->getCode());
             }
-            // return response()->json('Something went wrong on the server.', $e->getCode());
+            return response()->json('Something went wrong on the server.', $e->getCode());
         }
     }
 

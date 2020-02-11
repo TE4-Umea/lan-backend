@@ -31,7 +31,7 @@ class PassportAuthController extends Controller
                 return response()->json('Your credentials are incorrect. Please try again', $e->getCode());
             }
             // return response()->json('Something went wrong on the server.', $e->getCode());
-            return abort($e->getCode(), json_encode($e));
+            return json_encode($e);
         }
     }
 

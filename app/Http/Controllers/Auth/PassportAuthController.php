@@ -25,7 +25,7 @@ class PassportAuthController extends Controller
             ]);
             return $response->getBody();
         } catch (\GuzzleHttp\Exception\BadResponseException $e) {
-            return json_encode($e);
+            dd($e);
             if ($e->getCode() === 400) {
                 return response()->json('Invalid Request. Please enter a email or a password.', $e->getCode());
             } else if ($e->getCode() === 401) {

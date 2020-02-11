@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Room;
+use App\EventRegistrations;
 
 class RoomController extends Controller
 {
@@ -38,6 +39,7 @@ class RoomController extends Controller
         
     }
     public function destroy(Room $room) {
+        EventRegistrations::where('room_id', $room->id)->update(['room_id' => null]);
         return ["data" => $room->delete()];
     }
 }

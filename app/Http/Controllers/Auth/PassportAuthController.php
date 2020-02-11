@@ -30,7 +30,8 @@ class PassportAuthController extends Controller
             } else if ($e->getCode() === 401) {
                 return response()->json('Your credentials are incorrect. Please try again', $e->getCode());
             }
-            return abort($e->getCode(), 'Something went wrong on the server.');
+            dd($e);
+            // return abort($e->getCode(), 'Something went wrong on the server.');
         }
     }
 

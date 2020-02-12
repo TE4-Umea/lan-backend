@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Notification;
 use App\Event;
+use App\Notification;
+use Notification as SendingNotification;
 use App\Events\NotificationCreated;
 use App\Http\Controllers\PushController;
+use App\User;
+use App\Notifications\PushNotification;
 
 class EventNotificationsController extends Controller
 {
@@ -18,12 +21,12 @@ class EventNotificationsController extends Controller
         ]);
         $data = Notification::create($validatedData);
         NotificationCreated::dispatch($data);
+        SendingNotification::send(User::all(), new PushNotification($data));
 
         return [
             'message' => 'Event was created',
             'data' => $data
         ];
-        PushController::push($validatedData);
     }
 
     public function show(Event $event) {

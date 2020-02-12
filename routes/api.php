@@ -62,5 +62,5 @@ Route::group(['prefix' =>'/push-notification/', 'middleware' => ['multi-auth']],
 });
 
 
-Route::get('send','PushController@push')->name('push-notification.send');
+Route::get('push','PushController@push')->name('push-notification.push');
 

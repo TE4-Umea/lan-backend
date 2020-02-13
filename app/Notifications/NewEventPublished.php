@@ -3,23 +3,24 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Notifications\Notification;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use NotificationChannels\WebPush\WebPushMessage;
 use NotificationChannels\WebPush\WebPushChannel;
-use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Notifications\Notification;
 
-class PushNotification extends Notification
+class NewEventPublished extends Notification
 {
     use Queueable;
-    public $notification;
+    public $event;
+
     /**
      * Create a new notification instance.
      *
-     * @return void
+     * @return voidpostm
      */
     public function __construct($data)
     {
-        $this->notification = $data;
+        $this->event = $data;
     }
 
     /**
@@ -33,16 +34,6 @@ class PushNotification extends Notification
         return [WebPushChannel::class];
     }
 
-    public function toArray($notifiable)
-    {
-        return [
-            'title' => 'Hello from Laravel!',
-            'body' => 'Thank you for using our application.',
-            'action_url' => 'https://laravel.com',
-            'created' => Carbon::now()->toIso8601String()
-        ];
-    }
-
     /**
      * Get the web push representation of the notification.
      *
@@ -53,7 +44,20 @@ class PushNotification extends Notification
     public function toWebPush($notifiable, $notification)
     {
         return (new WebPushMessage)
-            ->title($this->notification->title)
-            ->body($this->notification->body);
+            ->title('Nytt event')
+            ->body($this->event->title);
+    }
+
+    /**
+     * Get the array representation of the notification.
+     *
+     * @param  mixed  $notifiable
+     * @return array
+     */
+    public function toArray($notifiable)
+    {
+        return [
+            //
+        ];
     }
 }

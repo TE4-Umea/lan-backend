@@ -28,12 +28,4 @@ class PushController extends Controller
             'message' => 'Success',
         ];
     }
-
-    public function push() {
-        $data = EventNotification::first();
-        Notification::send(User::all(), new PushNotification($data));
-        return [
-            'message' => 'Notification successfully sent'
-        ];
-    }
 }

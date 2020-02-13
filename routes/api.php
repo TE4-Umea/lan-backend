@@ -60,7 +60,3 @@ Route::group(['prefix' => '/event/',  'middleware' => ['multi-auth']], function(
 Route::group(['prefix' =>'/push-notification/', 'middleware' => ['multi-auth']], function() {
     Route::post('/subscribe','PushController@store');
 });
-
-
-Route::get('push','PushController@push')->name('push-notification.push');
-

@@ -8,18 +8,18 @@ use NotificationChannels\WebPush\WebPushMessage;
 use NotificationChannels\WebPush\WebPushChannel;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class PushNotification extends Notification
+class PushEventDeleted extends Notification
 {
     use Queueable;
-    public $notification;
+
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($data)
+    public function __construct()
     {
-        $this->notification = $data;
+        //
     }
 
     /**
@@ -43,7 +43,7 @@ class PushNotification extends Notification
     public function toWebPush($notifiable, $notification)
     {
         return (new WebPushMessage)
-            ->title($this->notification->title)
-            ->body($this->notification->body);
+            ->title('Nu är lanet över!')
+            ->body('Tack för att ni närvarade och hoppas vi ses nästa lan!');
     }
 }

@@ -10,6 +10,7 @@ use App\Events\NotificationCreated;
 use App\Http\Controllers\PushController;
 use App\User;
 use App\Notifications\PushNotification;
+use App\EventRegistrations;
 
 class EventNotificationsController extends Controller
 {
@@ -21,7 +22,14 @@ class EventNotificationsController extends Controller
         ]);
         $data = Notification::create($validatedData);
         NotificationCreated::dispatch($data);
-        SendingNotification::send(User::all(), new PushNotification($data));
+        
+        $users = EventRegistrations::where('event_id', '=',  $validatedData['event_id'])
+            ->where('checked_in', '=', 1)
+            ->with('user')
+            ->get()
+            ->pluck('user')
+            ->flatten();
+        SendingNotification::send($users, new PushNotification($data));
 
         return [
             'message' => 'Event was created',

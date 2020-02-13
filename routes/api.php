@@ -13,13 +13,14 @@ use Illuminate\Http\Request;
 |
 */
 Route::get('/', 'IndexController');
+
 Route::prefix('/auth/')->group(function () {
     
     Route::get('{provider}/redirect', 'Auth\SocialiteController@redirectToProvider');
     Route::get('{provider}/callback', 'Auth\SocialiteController@handleProviderCallback');
 
     Route::middleware('multi-auth')->group(function () {
-        
+
         Route::get('user', 'Auth\UserController');
         Route::post('/logout', 'Auth\PassportAuthController@logout')->name('auth.logout');
     });
@@ -28,11 +29,17 @@ Route::prefix('/auth/')->group(function () {
     Route::post('register', 'Auth\PassportAuthController@register')->name('auth.register');
 });
 
+Route::get('/admins/read', 'AdminController@index')->middleware(['multi-auth', 'admin']);
+
 Route::group(['prefix' => '/admin/',  'middleware' => ['multi-auth', 'admin']], function() {
+    
+    Route::get('search', 'AdminController@search');
+    Route::patch('{user}/update', 'AdminController@update');
+    
     Route::prefix('event/')->group(function () {
         Route::post('create', 'EventController@store')->name('event.create');
-        Route::get('{event}/delete', 'EventController@destroy')->name('event.delete');
-        Route::put('rules/update', 'EventRulesController@update')->name('event.rules.update');
+        Route::delete('{event}/delete', 'EventController@destroy')->name('event.delete');
+        Route::patch('rules/update', 'EventRulesController@update')->name('event.rules.update');
         
         Route::put('registration/{hashid}/update', 'EventRegistrationsController@update')->name('event.registration.update');
         Route::patch('registration/{registration}/update', 'EventRegistrationsController@patch')->name('event.registration.patch');
@@ -41,11 +48,9 @@ Route::group(['prefix' => '/admin/',  'middleware' => ['multi-auth', 'admin']], 
     });
     Route::prefix('placement/')->group(function () {
         Route::post('room/create', 'RoomController@store');
-        Route::get('room/{room}/delete', 'RoomController@destroy');
+        Route::delete('room/{room}/delete', 'RoomController@destroy');
         Route::get('rooms/read', 'RoomController@show');
         Route::patch('room/update', 'EventRegistrationsController@updateRoom');
-    });
-    Route::prefix('push-notification/')->group(function () {
     });
 });
 

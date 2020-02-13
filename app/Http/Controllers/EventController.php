@@ -4,9 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Notification;
 use App\Events\NewEventPublished;
 use App\Events\EventDeleted;
 use App\Event;
+use App\User;
+use App\Notifications\PushNewEventPublished;
+
 
 class EventController extends Controller
 {
@@ -32,6 +36,8 @@ class EventController extends Controller
         ]);
 
         NewEventPublished::dispatch($data);
+        Notification::send(User::all(), new PushNewEventPublished($data));
+
         
         return [
             'message' => 'Event was created',
@@ -55,7 +61,6 @@ class EventController extends Controller
         $event->delete();
         $data = $event->registrations()->get();
         EventDeleted::dispatch();
-
         return [
             'message' => 'Event has been deleted',
             'data' => $data
